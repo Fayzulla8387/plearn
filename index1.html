@@ -12,7 +12,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Manrope,'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink);height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 button,input,select{font:inherit;color:inherit}
-button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,label:focus-within,.drop:focus-visible{outline:3px solid #fff;outline-offset:2px}
+button:focus-visible,input:focus-visible,select:focus-visible,label:focus-within,.drop:focus-visible{outline:3px solid #fff;outline-offset:2px}
 header{display:flex;align-items:center;justify-content:space-between;padding:10px 22px;gap:12px}
 .logo{font:800 18px Unbounded,sans-serif}.logo b{color:var(--p1);font-weight:800;margin-left:8px}
 .timer{font:800 26px Unbounded,sans-serif;background:var(--panel);padding:6px 22px;border-radius:12px;min-width:120px;text-align:center}
@@ -54,16 +54,6 @@ kbd{flex:none;min-width:32px;height:32px;display:grid;place-items:center;border-
 .f.a input{border-color:var(--p1)}.f.b input{border-color:var(--p2)}
 .drop{border:2px dashed #6b5fb5;border-radius:14px;padding:16px;text-align:center;cursor:pointer;font-weight:700;display:block}.drop.over{background:#31266b;border-color:var(--p1)}
 .drop input{display:none}
-.qcard{background:#31266b;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;border-left:5px solid var(--p1)}
-.qcard .hd b{font:800 15px Unbounded,sans-serif}
-.qcard textarea{width:100%;min-height:54px;resize:vertical;background:#251b52;border:2px solid transparent;border-radius:10px;padding:10px 12px;font-weight:700;color:var(--ink)}
-.optRow{display:flex;gap:10px;align-items:center}
-.optRow input[type=radio]{flex:none;width:20px;height:20px;accent-color:var(--p2)}
-.optRow input[type=text]{flex:1;background:#251b52;border:2px solid transparent;border-radius:10px;padding:9px 11px;font-weight:600;color:var(--ink)}
-.optRow input[type=text]:focus-visible{border-color:var(--p2)}
-.myt-row{display:flex;gap:8px;align-items:center;background:#31266b;border-radius:10px;padding:8px 12px;font-weight:700;font-size:14px}
-.myt-row span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.myt-row button{background:#251b52;border:0;border-radius:8px;padding:6px 9px;cursor:pointer;font-size:13px}
 .config-warn{background:#8a274033;border:2px solid var(--bad);padding:10px;border-radius:10px;font-size:13px;color:#ff8fa3;line-height:1.5}
 .btns{display:flex;gap:10px;flex-wrap:wrap}
 .btn{background:#31266b;border:0;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer;font-size:13px}
@@ -125,7 +115,6 @@ kbd{flex:none;min-width:32px;height:32px;display:grid;place-items:center;border-
     <label class="f">Vaqt<select id="time"><option value="60">1 daqiqa</option><option value="90" selected>1,5 daqiqa</option><option value="120">2 daqiqa</option><option value="180">3 daqiqa</option></select></label>
     <label class="f">Marraga yetish uchun<select id="goal"><option value="8">8 ta to'g'ri javob</option><option value="10" selected>10 ta to'g'ri javob</option><option value="15">15 ta to'g'ri javob</option><option value="20">20 ta to'g'ri javob</option></select></label>
   </div>
-  <div class="btns"><button class="btn" id="openBuilder" style="flex:1;font-size:15px;padding:14px">🛠 O'zim test tuzaman</button></div>
   <label class="drop" id="dz" tabindex="0">📂 Test faylini tanlang yoki shu yerga tashlang (.csv, .json, .txt)<input type="file" id="f" accept=".csv,.json,.txt,text/csv,application/json,text/plain"></label>
   <div id="fs" class="hint"></div>
   <div class="f" id="cloudTestsWrap" style="display:none">
@@ -133,34 +122,11 @@ kbd{flex:none;min-width:32px;height:32px;display:grid;place-items:center;border-
     <select id="cloudTestsSelect"><option value="">-- Testni tanlang --</option></select>
     <div class="btns"><button class="btn" id="delCloud">🗑 Tanlangan testni bulutdan o'chirish</button></div>
   </div>
-  <div class="f" id="myTestsWrap">
-    <span>📚 O'zim tuzgan testlarim (shu qurilmada saqlanadi):</span>
-    <select id="myTestsSelect"><option value="">-- Testni tanlang --</option></select>
-    <div class="btns">
-      <button class="btn" id="loadMyTest">📂 Yuklab olish</button>
-      <button class="btn" id="editMyTest">✏️ Tahrirlash</button>
-      <button class="btn" id="delMyTest">🗑 O'chirish</button>
-    </div>
-  </div>
   <div class="btns">
     <button class="btn" id="d1">⬇ CSV shablon</button><button class="btn" id="d2">⬇ JSON shablon</button><button class="btn" id="rs">↺ Standart savollar</button>
   </div>
   <p class="hint">CSV: har qator — savol; A; B; C; D; to'g'ri javob (1–4 yoki A–D). Excel'dan «CSV UTF-8» qilib saqlang. Boshqaruv: 1-o'quvchi A S D F, 2-o'quvchi J K L ; yoki bosish orqali.</p>
   <button class="go" id="go">Poygani boshlash</button>
-</div></div>
-
-<!-- TEST TUZISH -->
-<div class="modal" id="builder"><div class="card" style="max-width:760px">
-  <h1>🛠 Test tuzish</h1>
-  <p>Savollaringizni yozing, har biriga variant sonini (2–4) tanlang va to'g'ri javobni belgilang. Testni saqlash uchun kamida 3 ta savol kerak — u shu qurilmada saqlanadi va istalgan payt qayta ishlatiladi.</p>
-  <label class="f">Test nomi<input id="bName" placeholder="Masalan: Matematika, 5-sinf, 1-bob" maxlength="60"></label>
-  <div id="bList" style="display:flex;flex-direction:column;gap:14px"></div>
-  <div class="btns"><button class="btn" id="bAdd">+ Savol qo'shish</button></div>
-  <div id="bMsg" class="hint"></div>
-  <div class="btns">
-    <button class="go" id="bSave">💾 Testni saqlash</button>
-    <button class="btn" id="bClose">Bekor qilish</button>
-  </div>
 </div></div>
 
 <!-- NATIJALAR -->
@@ -320,77 +286,6 @@ function loadFile(file){if(!file)return;const r=new FileReader();
   r.onerror=()=>setStatus('Faylni o\'qishda xato yuz berdi.','err');
   r.readAsText(file,'UTF-8')}
 
-/* ---------- O'zim test tuzish (mahalliy, login shart emas) ---------- */
-const MYKEY='plearn_mytests';
-function myTests(){try{const o=JSON.parse(localStorage.getItem(MYKEY)||'{}');return o&&typeof o=='object'?o:{}}catch(e){return{}}}
-function saveMyTests(o){try{localStorage.setItem(MYKEY,JSON.stringify(o))}catch(e){setStatus("Brauzer xotirasiga saqlab bo'lmadi (xotira to'lgan yoki maxfiy rejim).",'err')}}
-function renderMyTests(){const m=myTests(),ids=Object.keys(m).sort((a,b)=>(m[b].t||0)-(m[a].t||0)),sel=$('#myTestsSelect'),old=sel.value;
-  sel.innerHTML='<option value="">-- Testni tanlang --</option>';
-  ids.forEach(id=>{const o=document.createElement('option');o.value=id;o.textContent=`${m[id].name} (${m[id].data.length} ta savol)`;sel.append(o)});
-  if(m[old])sel.value=old}
-let bEditId=null,bSeq=0;
-const bCard=(q)=>{const id='b'+(++bSeq),n=q?q.o.length:4,correct=q?q.a:0;
-  const div=document.createElement('div');div.className='qcard';div.dataset.id=id;
-  div.innerHTML=`<div class="hd"><b>Savol</b><button type="button" class="btn qDel" title="Savolni o'chirish">🗑 O'chirish</button></div>
-    <textarea class="qText" placeholder="Savol matnini shu yerga yozing..."></textarea>
-    <label class="f" style="max-width:200px">Variant soni<select class="qCount"><option value="2">2 ta</option><option value="3">3 ta</option><option value="4">4 ta</option></select></label>
-    <div class="qOpts"></div>`;
-  div.querySelector('.qText').value=q?q.q:'';
-  div.querySelector('.qCount').value=String(n);
-  div.querySelector('.qDel').onclick=()=>{div.remove();renumber()};
-  div.querySelector('.qCount').onchange=e=>buildOpts(div,+e.target.value);
-  buildOpts(div,n,q?q.o:null,correct);
-  return div};
-function buildOpts(card,count,texts,correct){const wrap=card.querySelector('.qOpts'),name=card.dataset.id+'_c';
-  const prevTexts=texts||[...wrap.querySelectorAll('.qOptText')].map(x=>x.value);
-  const prevCorrect=correct!=null?correct:[...wrap.querySelectorAll('.qCorrect')].findIndex(x=>x.checked);
-  wrap.innerHTML='';
-  for(let i=0;i<count;i++){const row=document.createElement('label');row.className='optRow';
-    row.innerHTML=`<input type="radio" class="qCorrect" name="${name}"><input type="text" class="qOptText" placeholder="${String.fromCharCode(65+i)}-variant matni" maxlength="120">`;
-    row.querySelector('.qOptText').value=prevTexts[i]||'';
-    if(i===(prevCorrect>=0?prevCorrect:0))row.querySelector('.qCorrect').checked=true;
-    wrap.append(row)}}
-function renumber(){$('#bList').querySelectorAll('.qcard').forEach((c,i)=>c.querySelector('.hd b').textContent='Savol '+(i+1))}
-function bMsg(m,cls){const e=$('#bMsg');e.textContent=m||'';e.className='hint'+(m?(' '+(cls||'err')):'')}
-function openBuilderFresh(){bEditId=null;$('#bName').value='';$('#bList').innerHTML='';bMsg('');
-  for(let i=0;i<3;i++)$('#bList').append(bCard());renumber();
-  $('#setup').classList.remove('on');$('#builder').classList.add('on')}
-function openBuilderEdit(id){const t=myTests()[id];if(!t)return;
-  bEditId=id;$('#bName').value=t.name;$('#bList').innerHTML='';bMsg('');
-  t.data.forEach(q=>$('#bList').append(bCard(q)));renumber();
-  $('#setup').classList.remove('on');$('#builder').classList.add('on')}
-function closeBuilder(){$('#builder').classList.remove('on');$('#setup').classList.add('on')}
-function gatherBuilder(){const name=$('#bName').value.trim();
-  if(!name)return{err:"Testga nom bering (masalan: «Fizika 8-sinf»)."};
-  const cards=[...$('#bList').querySelectorAll('.qcard')],out=[];
-  for(let i=0;i<cards.length;i++){const c=cards[i],qt=c.querySelector('.qText').value.trim();
-    const opts=[...c.querySelectorAll('.qOptText')],correctI=[...c.querySelectorAll('.qCorrect')].findIndex(x=>x.checked);
-    const texts=opts.map(o=>o.value.trim());
-    if(!qt)return{err:`${i+1}-savol: savol matni yozilmagan.`};
-    const filled=texts.filter(Boolean);
-    if(filled.length<2)return{err:`${i+1}-savol: kamida 2 ta variant to'ldiring.`};
-    if(texts.some(x=>!x))return{err:`${i+1}-savol: bo'sh variant qoldirmang yoki variant sonini kamaytiring.`};
-    if(correctI<0)return{err:`${i+1}-savol: to'g'ri javobni belgilang (chapdagi doiracha).`};
-    out.push({q:qt,o:texts,a:correctI})}
-  if(out.length<3)return{err:`Kamida 3 ta savol kerak (hozir ${out.length} ta).`};
-  return{name,data:out}}
-$('#openBuilder').onclick=openBuilderFresh;
-$('#bAdd').onclick=()=>{$('#bList').append(bCard());renumber();$('#bList').lastElementChild.querySelector('.qText').focus()};
-$('#bClose').onclick=()=>{if($('#bList').children.length&&!confirm("Test saqlanmadi. Chiqasizmi?"))return;closeBuilder()};
-$('#bSave').onclick=()=>{const r=gatherBuilder();if(r.err)return bMsg(r.err);
-  const m=myTests(),id=bEditId||('m'+Date.now().toString(36)+Math.random().toString(36).slice(2,7));
-  m[id]={name:r.name,data:r.data,t:Date.now()};saveMyTests(m);renderMyTests();
-  Q=r.data;fn=r.name;save();
-  bMsg(`Saqlandi! «${r.name}» — ${r.data.length} ta savol.`,'ok');
-  if(currentUser)saveTestToCloud(r.name,r.data);
-  setTimeout(()=>{closeBuilder();setStatus(`${fn}: ${Q.length} ta savol yuklandi (o'zingiz tuzgan test)`,'ok')},700)};
-$('#loadMyTest').onclick=()=>{const id=$('#myTestsSelect').value,t=myTests()[id];if(!t)return setStatus("Avval ro'yxatdan testni tanlang.",'err');
-  Q=t.data;fn=t.name;save();setStatus(`${fn}: ${Q.length} ta savol yuklandi (o'zingiz tuzgan test)`,'ok')};
-$('#editMyTest').onclick=()=>{const id=$('#myTestsSelect').value;if(!id)return setStatus("Avval ro'yxatdan testni tanlang.",'err');openBuilderEdit(id)};
-$('#delMyTest').onclick=()=>{const id=$('#myTestsSelect').value,m=myTests();if(!id||!m[id])return setStatus("Avval ro'yxatdan testni tanlang.",'err');
-  if(!confirm(`«${m[id].name}» testi o'chiriladi. Davom etasizmi?`))return;
-  delete m[id];saveMyTests(m);renderMyTests();setStatus("Test o'chirildi.",'ok')};
-
 /* ---------- Poyga ---------- */
 [0,1].forEach(i=>$('#s'+i).innerHTML='<div class="hd"><span class="nm"></span><span class="sc">0</span></div><div class="bar"><i></i></div><div class="mt"><span class="qn"></span><span class="st"></span></div><div class="q"></div><div class="opts"></div><div class="toast"></div>');
 const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
@@ -466,7 +361,6 @@ $('#d2').onclick=()=>dl('savollar-shablon.json',JSON.stringify([{q:'HTML nima uc
 try{const s=JSON.parse(localStorage.getItem('plearn_kp')||'null');
   if(s&&Array.isArray(s.Q)&&s.Q.length>2){Q=s.Q;fn=s.fn;setStatus(fn+': '+Q.length+' ta savol');if(s.n){$('#n0').value=s.n[0];$('#n1').value=s.n[1]}}}catch(e){}
 if(!Q.length)useDefault();
-renderMyTests();
 if(db){
   db.auth.getSession().then(({data})=>{const u=data&&data.session&&data.session.user;setUser(u);if(u&&$('#authModal').classList.contains('on'))showSetup()}).catch(()=>{});
   db.auth.onAuthStateChange((_e,session)=>setUser(session&&session.user))}
